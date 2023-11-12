@@ -1,0 +1,13 @@
+server:
+  port: 9296
+
+spring:
+  application:
+    name: IMS-CONFIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/SyedMiraj/csl-ims
+          clone-on-start: true
+          default-label: master
