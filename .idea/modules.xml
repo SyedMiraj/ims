@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/ims.iml" filepath="$PROJECT_DIR$/.idea/ims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ims-cloud-config/ims-cloud-config.iml" filepath="$PROJECT_DIR$/ims-cloud-config/ims-cloud-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ims-customer-service/ims-customer-service.iml" filepath="$PROJECT_DIR$/ims-customer-service/ims-customer-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ims-gateway/ims-gateway.iml" filepath="$PROJECT_DIR$/ims-gateway/ims-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ims-product-service/ims-product-service.iml" filepath="$PROJECT_DIR$/ims-product-service/ims-product-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ims-service-registry/ims-service-registry.iml" filepath="$PROJECT_DIR$/ims-service-registry/ims-service-registry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ims-supplier-service/ims-supplier-service.iml" filepath="$PROJECT_DIR$/ims-supplier-service/ims-supplier-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ims-user-service/ims-user-service.iml" filepath="$PROJECT_DIR$/ims-user-service/ims-user-service.iml" />
+    </modules>
+  </component>
+</project>

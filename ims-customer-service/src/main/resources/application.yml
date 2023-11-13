@@ -1,0 +1,8 @@
+server:
+  servlet:
+    context-path: /customers
+  port: 9001
+
+spring:
+  application:
+    name: IMS-CUSTOMER-SERVICE
