@@ -1,6 +1,4 @@
 server:
-  servlet:
-    context-path: /products
   port: 9002
 
 spring:

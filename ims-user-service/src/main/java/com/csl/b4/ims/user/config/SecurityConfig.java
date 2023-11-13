@@ -39,7 +39,8 @@ public class SecurityConfig {
                 "/swagger-ui/**",
                 "/v2/api-docs",
                 "/webjars/**",
-                "/swagger-resources/**"};
+                "/swagger-resources/**",
+                "/eureka"};
 
         return http.csrf().disable()
                 .authorizeRequests()

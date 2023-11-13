@@ -1,11 +1,12 @@
 server:
-  servlet:
-    context-path: /customers
   port: 9004
 
 spring:
   application:
     name: IMS-USER-SERVICE
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 app:
   jwt:
