@@ -24,7 +24,7 @@ spring:
         - id: ims-user-service
           uri: lb://IMS-USER-SERVICE
           predicates:
-            - Path=/users/**
-            - Path=/auth/**
+            - Path=/auth/**, /users/**
           filters:
             - AuthenticationFilter
+

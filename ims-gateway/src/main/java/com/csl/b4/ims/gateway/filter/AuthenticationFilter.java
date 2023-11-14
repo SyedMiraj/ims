@@ -1,23 +1,23 @@
 package com.csl.b4.ims.gateway.filter;
 
+import com.csl.b4.ims.gateway.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 @Slf4j
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
     private final RouteValidator validator;
-    private final RestTemplate restTemplate;
+    private final JwtService jwtService;
 
-    public AuthenticationFilter(RouteValidator validator, RestTemplate restTemplate) {
+    public AuthenticationFilter(RouteValidator validator, JwtService jwtService) {
         super(Config.class);
         this.validator = validator;
-        this.restTemplate = restTemplate;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -34,7 +34,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     authHeader = authHeader.substring(7);
                 }
                 try {
-                    Boolean validToken = restTemplate.getForObject("http://IMS-USER-SERVICE/users/auth/token/validate?token=" + authHeader, Boolean.class);
+//                    Boolean validToken = restTemplate.getForObject("http://IMS-USER-SERVICE/auth/token/validate?token=" + authHeader, Boolean.class);
+                    Boolean validToken = jwtService.validateToken(authHeader);
                     if(validToken == null || !validToken){
                         log.error("invalid access");
                         throw new RuntimeException("un authorized access to application");
