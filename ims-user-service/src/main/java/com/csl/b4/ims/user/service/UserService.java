@@ -2,7 +2,7 @@ package com.csl.b4.ims.user.service;
 
 import com.csl.b4.ims.user.entity.UserEntity;
 import com.csl.b4.ims.user.mapper.UserMapper;
-import com.csl.b4.ims.user.model.UserDto;
+import com.csl.b4.ims.user.model.User;
 import com.csl.b4.ims.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +26,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDto saveUser(UserDto dto){
+    public User saveUser(User dto){
         log.info("Saving user");
         UserEntity entity = userMapper.toEntity(dto);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -35,7 +35,7 @@ public class UserService {
         return userMapper.toDto(persistedEntity);
     }
 
-    public List<UserDto> findAllUsers() {
+    public List<User> findAllUsers() {
         log.info("Fetching all users");
         List<UserEntity> userEntities = userRepository.findAll();
         return userEntities.stream()
@@ -43,7 +43,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserDto findUserById(Long id){
+    public User findUserById(Long id){
         Optional<UserEntity> user = userRepository.findById(id);
         return user.map(userMapper::toDto).orElse(null);
     }
