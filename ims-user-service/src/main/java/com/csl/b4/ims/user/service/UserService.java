@@ -19,13 +19,11 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
 
-    public UserService(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+    public UserService(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
     }
 
     public UserDto saveUser(UserDto dto){
@@ -48,15 +46,5 @@ public class UserService {
     public UserDto findUserById(Long id){
         Optional<UserEntity> user = userRepository.findById(id);
         return user.map(userMapper::toDto).orElse(null);
-    }
-
-    public String generateToken(String username) {
-        log.info("Generating token for username " + username);
-        return jwtService.generateToken(username);
-    }
-
-    public Boolean validateToken(String token) {
-        log.info("Validating the token. TOKEN: " + token);
-        return jwtService.validateToken(token);
     }
 }

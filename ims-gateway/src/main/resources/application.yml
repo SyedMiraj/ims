@@ -4,27 +4,22 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: ims-customer-service
+        - id: IMS-CUSTOMER-SERVICE
           uri: lb://IMS-CUSTOMER-SERVICE
           predicates:
             - Path=/customers/**
 
-        - id: ims-product-service
+        - id: IMS-PRODUCT-SERVICE
           uri: lb://IMS-PRODUCT-SERVICE
           predicates:
             - Path=/products/**
 
-        - id: ims-supplier-service
+        - id: IMS-SUPPLIER-SERVICE
           uri: lb://IMS-SUPPLIER-SERVICE
           predicates:
             - Path=/supplier/**
-          filters:
-            - AuthenticationFilter
 
-        - id: ims-user-service
-          uri: lb://IMS-USER-SERVICE
+        - id: IMS-USER-SERVICE
+          uri: http://localhost:9004
           predicates:
             - Path=/auth/**, /users/**
-          filters:
-            - AuthenticationFilter
-
