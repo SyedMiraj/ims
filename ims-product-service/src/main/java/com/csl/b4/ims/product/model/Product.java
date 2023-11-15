@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Product {
     private long id;
     private String title;
-    private Category category;
+    private Long categoryId;
     private String description;
     private LocalDate createdAt;
     private LocalDate updatedAt;

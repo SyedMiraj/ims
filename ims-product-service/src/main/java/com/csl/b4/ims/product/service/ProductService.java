@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.parser.Entity;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,15 +28,18 @@ public class ProductService {
     }
 
     public List<Product> findAllProducts(String title, Long categoryId){
-        List<Entity> products = productRepository.findAll(ProductSpecification.findProducts(title, categoryId));
-        return null;
+        List<ProductEntity> products = productRepository.findAll(ProductSpecification.findProducts(title, categoryId));
+        return products.stream().map(productMapper::toDto).collect(Collectors.toList());
     }
 
     public Page<Product> findAllProducts(Pageable pageable, String title, Long categoryId){
         Page<ProductEntity> products = productRepository.findAll(ProductSpecification.findProducts(title, categoryId), pageable);
-//        products.get()
-//                .map(entity -> productMapper.toDto(entity))
-//                .;
-        return null;
+        return products.map(productMapper::toDto);
+    }
+
+    public void saveProduct(Product product){
+        ProductEntity entity = productMapper.toEntity(product);
+        entity.setCreatedAt(LocalDate.now());
+        productRepository.save(entity);
     }
 }

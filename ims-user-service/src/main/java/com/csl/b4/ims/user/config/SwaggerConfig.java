@@ -20,18 +20,18 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+//    public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
-    }
+//    private ApiKey apiKey() {
+//        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+//    }
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .securityContexts(Arrays.asList(securityContext()))
-                .securitySchemes(Arrays.asList(apiKey()))
+//                .securityContexts(Arrays.asList(securityContext()))
+//                .securitySchemes(Arrays.asList(apiKey()))
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
