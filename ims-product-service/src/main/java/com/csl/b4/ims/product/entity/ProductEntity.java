@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -28,6 +29,15 @@ public class ProductEntity {
     private CategoryEntity category;
 
     private String description;
+
+    @Column(name = "PURCHASE_PRICE")
+    private BigDecimal purchasePrice;
+
+    @Column(name = "SELLING_PRICE")
+    private BigDecimal sellingPrice;
+
+    @Column(name = "QUANTITY")
+    private Double availableQuantity;
 
     private LocalDate createdAt;
 

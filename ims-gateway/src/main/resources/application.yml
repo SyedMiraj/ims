@@ -7,19 +7,19 @@ spring:
         - id: IMS-CUSTOMER-SERVICE
           uri: lb://IMS-CUSTOMER-SERVICE
           predicates:
-            - Path=/customers/**
+            - Path=/customers/**, /v3/api-docs/IMS-CUSTOMER
 
         - id: IMS-PRODUCT-SERVICE
           uri: lb://IMS-PRODUCT-SERVICE
           predicates:
-            - Path=/products/**,/categories/**
+            - Path=/products/**, /categories/**, /v3/api-docs/IMS-PRODUCT
 
         - id: IMS-SUPPLIER-SERVICE
           uri: lb://IMS-SUPPLIER-SERVICE
           predicates:
-            - Path=/supplier/**
+            - Path=/supplier/**, /v3/api-docs/IMS-SUPPLIER
 
         - id: IMS-USER-SERVICE
           uri: lb://IMS-USER-SERVICE
           predicates:
-            - Path=/auth/**, /users/**
+            - Path=/auth/**, /users/**, /v3/api-docs/IMS-USER

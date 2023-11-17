@@ -23,6 +23,9 @@ public class ProductMapper {
         entity.setTitle(dto.getTitle());
         entity.setCategory(categoryRepository.findById(dto.getCategoryId()).orElseThrow( () -> new RuntimeException("Category not found")));
         entity.setDescription(dto.getDescription());
+        entity.setPurchasePrice(dto.getPurchasePrice());
+        entity.setSellingPrice(dto.getSellingPrice());
+        // availableQuantity will be updated by purchase and sell
         return entity;
     }
 
@@ -32,6 +35,9 @@ public class ProductMapper {
         dto.setTitle(entity.getTitle());
         dto.setDescription(entity.getDescription());
         dto.setCategoryId(entity.getCategory().getId());
+        dto.setPurchasePrice(entity.getPurchasePrice());
+        dto.setSellingPrice(entity.getSellingPrice());
+        dto.setAvailableQuantity(entity.getAvailableQuantity());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setUpdatedAt(entity.getUpdatedAt());
         return dto;
