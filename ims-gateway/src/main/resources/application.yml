@@ -3,6 +3,9 @@ spring:
     name: IMS-GATEWAY
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - AddResponseHeader=Access-Control-Allow-Origin, *
       routes:
         - id: IMS-CUSTOMER-SERVICE
           uri: lb://IMS-CUSTOMER-SERVICE

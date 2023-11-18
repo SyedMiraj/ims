@@ -2,6 +2,7 @@ package com.csl.b4.ims.product.service;
 
 import com.csl.b4.ims.product.entity.ProductEntity;
 import com.csl.b4.ims.product.mapper.ProductMapper;
+import com.csl.b4.ims.product.model.InventoryActivity;
 import com.csl.b4.ims.product.model.Product;
 import com.csl.b4.ims.product.repository.ProductRepository;
 import com.csl.b4.ims.product.specification.ProductSpecification;
@@ -41,5 +42,17 @@ public class ProductService {
         ProductEntity entity = productMapper.toEntity(product);
         entity.setCreatedAt(LocalDate.now());
         productRepository.save(entity);
+    }
+
+    public void updateProductStock(Long productId, double quantity, InventoryActivity activity) {
+        ProductEntity entity = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
+        double currentStock = entity.getAvailableQuantity();
+        if(activity.equals(InventoryActivity.Purchase)){
+            currentStock += quantity;
+        } else {
+            currentStock -= quantity;
+        }
+        entity.setAvailableQuantity(currentStock);
     }
 }

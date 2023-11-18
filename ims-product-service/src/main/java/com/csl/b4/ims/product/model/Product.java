@@ -15,9 +15,7 @@ public class Product {
     private String title;
     private Long categoryId;
     private String description;
-    private BigDecimal purchasePrice;
-    private BigDecimal sellingPrice;
-    private Double availableQuantity;
+    private double availableQuantity;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 }

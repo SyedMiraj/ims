@@ -41,4 +41,9 @@ public class SupplierController {
         List<Supplier> suppliersAsList = supplierService.findAllSuppliers(code, name, phone);
         return ResponseEntity.ok(suppliersAsList);
     }
+    @GetMapping("/{id}/exist")
+    public ResponseEntity<Boolean> isExist(@PathVariable("id") Long id){
+        boolean exist = supplierService.isExist(id);
+        return exist ? ResponseEntity.ok(exist) : ResponseEntity.notFound().build();
+    }
 }
