@@ -9,23 +9,24 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity(name = "PURCHASE_ENTITY")
+@Entity(name = "SELL_ENTITY")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PurchaseOrderEntity implements Serializable {
-
+public class SellOrderEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "PURCHASE_ID_GEN")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SELL_ID_GEN")
     @SequenceGenerator(
-            name = "PURCHASE_ID_GEN",
+            name = "SELL_ID_GEN",
             allocationSize = 1,
-            sequenceName = "S_PURCHASE_ENTITY")
+            sequenceName = "S_SELL_ENTITY")
     private long id;
     private String orderNumber;
-    private Long supplierId;
+    private Long customerId;
     private LocalDate orderDate;
     private BigDecimal paidAmount;
     private BigDecimal dueAmount;
     private String entryUsername;
+
+
 }

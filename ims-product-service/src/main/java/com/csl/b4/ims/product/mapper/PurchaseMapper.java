@@ -32,7 +32,7 @@ public class PurchaseMapper {
         return entity;
     }
 
-    public PurchaseOrderDetailsEntity toOrderDetailsEntity(ProductWiseQuantity productWiseQuantity, PurchaseOrderEntity orderEntity){
+    public PurchaseOrderDetailsEntity toOrderDetailsEntity(ProductWiseQuantity productWiseQuantity, PurchaseOrderEntity purchaseOrderEntity){
         PurchaseOrderDetailsEntity entity = new PurchaseOrderDetailsEntity();
         productRepository.findById(productWiseQuantity.getProductId())
                         .orElseThrow(() -> new RuntimeException("Product not found with id " + productWiseQuantity.getProductId()));
@@ -40,7 +40,7 @@ public class PurchaseMapper {
         entity.setRate(productWiseQuantity.getRate());
         entity.setQuantity(productWiseQuantity.getQuantity());
         entity.setAmount(productWiseQuantity.getQuantity() > 0 ? productWiseQuantity.getRate().multiply(BigDecimal.valueOf(productWiseQuantity.getQuantity())) : BigDecimal.ZERO);
-        entity.setOrder(orderEntity);
+        entity.setPurchase(purchaseOrderEntity);
         return entity;
     }
 }

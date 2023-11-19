@@ -1,4 +1,4 @@
-package com.csl.b4.ims.supplier.entity;
+package com.csl.b4.ims.customer.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,16 +12,15 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupplierEntity implements Serializable {
+public class CustomerEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SUPPLIER_ID_GEN")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "CUSTOMER_ID_GEN")
     @SequenceGenerator(
-            name = "SUPPLIER_ID_GEN",
+            name = "CUSTOMER_ID_GEN",
             allocationSize = 1,
-            sequenceName = "S_SUPPLIER_ENTITY")
+            sequenceName = "S_CUSTOMER_ENTITY")
     private long id;
-    private String code;
     private String name;
     private String address;
     private String phone;

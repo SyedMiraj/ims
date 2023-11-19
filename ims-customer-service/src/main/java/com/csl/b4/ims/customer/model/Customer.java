@@ -1,4 +1,4 @@
-package com.csl.b4.ims.supplier.model;
+package com.csl.b4.ims.customer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Supplier {
+public class Customer {
+
     private long id;
-    private String code;
     private String name;
     private String address;
     private String phone;

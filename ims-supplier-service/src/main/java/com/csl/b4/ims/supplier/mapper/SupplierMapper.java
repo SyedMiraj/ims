@@ -18,7 +18,7 @@ public class SupplierMapper {
         SupplierEntity entity = supplierRepository.findById(dto.getId())
                 .orElse(new SupplierEntity());
         entity.setCode(dto.getCode());
-        entity.setFullName(dto.getFullName());
+        entity.setName(dto.getName());
         entity.setAddress(dto.getAddress());
         entity.setPhone(dto.getPhone());
         return entity;
@@ -28,7 +28,7 @@ public class SupplierMapper {
         Supplier dto = new Supplier();
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
-        dto.setFullName(entity.getFullName());
+        dto.setName(entity.getName());
         dto.setAddress(entity.getAddress());
         dto.setPhone(entity.getPhone());
         dto.setCreatedAt(entity.getCreatedAt());

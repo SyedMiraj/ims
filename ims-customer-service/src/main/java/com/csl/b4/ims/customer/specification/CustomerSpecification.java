@@ -1,20 +1,19 @@
-package com.csl.b4.ims.supplier.specification;
+package com.csl.b4.ims.customer.specification;
 
-import com.csl.b4.ims.supplier.entity.SupplierEntity;
+import com.csl.b4.ims.customer.entity.CustomerEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
 
-public class SupplierSpecification {
-
-    public static Specification<SupplierEntity> findSuppliers(String code, String name, String phone){
+public class CustomerSpecification {
+    public static Specification<CustomerEntity> findSCustomers(String name, String address, String phone){
         return (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
-            if (code != null) {
-                predicate = cb.and(predicate, cb.equal(root.get("code"), code));
-            }
             if (name != null) {
                 predicate = cb.and(predicate, cb.like(root.get("name"), "%" + name + "%"));
+            }
+            if (address != null) {
+                predicate = cb.and(predicate, cb.like(root.get("address"), "%" + address + "%"));
             }
             if (phone != null) {
                 predicate = cb.and(predicate, cb.like(root.get("phone"), "%" + phone + "%"));
