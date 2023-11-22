@@ -12,7 +12,7 @@ services:
     container_name: customer-service
     image: 611622/ims-customer-service
     environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
     expose:
       - 9001
     networks:
@@ -32,7 +32,7 @@ services:
     container_name: product-service
     image: 611622/ims-product-service
     environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
     expose:
       - 9002
     networks:
@@ -42,7 +42,7 @@ services:
     container_name: service-registry
     image: 611622/ims-service-registry
     environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
     expose:
       - 8761
     networks:
@@ -52,7 +52,7 @@ services:
     container_name: supplier-service
     image: 611622/ims-supplier-service
     environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
     expose:
       - 9003
     networks:
@@ -62,7 +62,7 @@ services:
     container_name: user-service
     image: 611622/ims-user-service
     environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
     expose:
       - 9004
     networks:
