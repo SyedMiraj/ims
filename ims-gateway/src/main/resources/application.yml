@@ -26,3 +26,12 @@ spring:
           uri: lb://IMS-USER-SERVICE
           predicates:
             - Path=/auth/**, /users/**, /v3/api-docs/IMS-USER
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${EUREKA_SERVER:localhost}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    hostname: ${EUREKA_SERVER:localhost}

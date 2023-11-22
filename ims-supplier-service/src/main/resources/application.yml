@@ -4,3 +4,12 @@ server:
 spring:
   application:
     name: IMS-SUPPLIER-SERVICE
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${EUREKA_SERVER:localhost}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    hostname: ${EUREKA_SERVER:localhost}
