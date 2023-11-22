@@ -1,20 +1,20 @@
 version: "3.9"
 services:
-  cloud-config:
-    container_name: cloud-config
-    image: 611622/ims-cloud-config
-    ports:
-      - "9296:9296"
-    expose:
-      - "9296"
-    networks:
-      - csl-ims
+#  cloud-config:
+#    container_name: cloud-config
+#    image: 611622/ims-cloud-config
+#    expose:
+#      - 9296
+#    networks:
+#      - csl-ims
 
   customer-service:
     container_name: customer-service
     image: 611622/ims-customer-service
-    ports:
-      - "9001:9001"
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+    expose:
+      - 9001
     networks:
       - csl-ims
 
@@ -22,43 +22,49 @@ services:
     container_name: gateway
     image: 611622/ims-gateway
     ports:
-      - "8080:8080"
+      - 8080:8080
     expose:
-      - "8080"
+      - 8080
     networks:
       - csl-ims
 
   product-service:
     container_name: product-service
     image: 611622/ims-product-service
-    ports:
-      - "9002:9002"
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+    expose:
+      - 9002
     networks:
       - csl-ims
 
   service-registry:
     container_name: service-registry
     image: 611622/ims-service-registry
-    ports:
-      - "8761:8761"
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
     expose:
-      - "8761"
+      - 8761
     networks:
       - csl-ims
 
   supplier-service:
     container_name: supplier-service
     image: 611622/ims-supplier-service
-    ports:
-      - "9003:9003"
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+    expose:
+      - 9003
     networks:
       - csl-ims
 
   user-service:
     container_name: user-service
     image: 611622/ims-user-service
-    ports:
-      - "9004:9004"
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9096"}}}}'
+    expose:
+      - 9004
     networks:
       - csl-ims
 
