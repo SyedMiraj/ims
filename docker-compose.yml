@@ -15,6 +15,8 @@ services:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
       EUREKA_SERVER: service-registry
       EUREKA_PORT: 8761
+    ports:
+      - 9001:9001
     expose:
       - 9001
     networks:
@@ -40,6 +42,8 @@ services:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
       EUREKA_SERVER: service-registry
       EUREKA_PORT: 8761
+    ports:
+      - 9002:9002
     expose:
       - 9002
     networks:
@@ -48,6 +52,8 @@ services:
   service-registry:
     container_name: service-registry
     image: 611622/ims-service-registry
+    ports:
+      - 8761:8761
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
       EUREKA_SERVER: service-registry
@@ -64,6 +70,8 @@ services:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
       EUREKA_SERVER: service-registry
       EUREKA_PORT: 8761
+    ports:
+      - 9003:9003
     expose:
       - 9003
     networks:
@@ -76,6 +84,8 @@ services:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
       EUREKA_SERVER: service-registry
       EUREKA_PORT: 8761
+    ports:
+      - 9004:9004
     expose:
       - 9004
     networks:
