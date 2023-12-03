@@ -1,96 +1,74 @@
-version: "3.9"
+---
+version: '3.7'
 services:
-#  cloud-config:
-#    container_name: cloud-config
-#    image: 611622/ims-cloud-config
-#    expose:
-#      - 9296
-#    networks:
-#      - csl-ims
-
-  customer-service:
-    container_name: customer-service
-    image: 611622/ims-customer-service
+  ims-mysql:
+    container_name: ims-mysql
+    image: mysql
     environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
-      EUREKA_SERVER: service-registry
-      EUREKA_PORT: 8761
-    ports:
-      - 9001:9001
+      MYSQL_DATABASE: ims
+      MYSQL_ROOT_PASSWORD: csl$b4@2023
+    volumes:
+      - ./ims-mysql:/var/lib/mysql
     expose:
-      - 9001
-    networks:
-      - csl-ims
-
-  gateway:
-    container_name: gateway
-    image: 611622/ims-gateway
-    environment:
-      EUREKA_SERVER: service-registry
-      EUREKA_PORT: 8761
+      - "3306"
     ports:
-      - 8080:8080
-    expose:
-      - 8080
-    networks:
-      - csl-ims
+      - "3306:3306"
+    command: -p 3306
+    restart: always
 
-  product-service:
-    container_name: product-service
-    image: 611622/ims-product-service
-    environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
-      EUREKA_SERVER: service-registry
-      EUREKA_PORT: 8761
-    ports:
-      - 9002:9002
-    expose:
-      - 9002
-    networks:
-      - csl-ims
-
-  service-registry:
+  ## Eureka Server
+  ims-service-registry:
+    image: 611622/ims-service-registry:latest
     container_name: service-registry
-    image: 611622/ims-service-registry
     ports:
-      - 8761:8761
-    environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
-      EUREKA_SERVER: service-registry
-      EUREKA_PORT: 8761
-    expose:
-      - 8761
-    networks:
-      - csl-ims
+      - "8761:8761"
 
-  supplier-service:
-    container_name: supplier-service
-    image: 611622/ims-supplier-service
-    environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
-      EUREKA_SERVER: service-registry
-      EUREKA_PORT: 8761
+  ims-gateway:
+    image: 611622/ims-gateway:latest
+    container_name: gateway
     ports:
-      - 9003:9003
+      - "8181:8080"
     expose:
-      - 9003
-    networks:
-      - csl-ims
-
-  user-service:
-    container_name: user-service
-    image: 611622/ims-user-service
+      - "8181"
     environment:
-      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://cloud-config:9296"}}}}'
-      EUREKA_SERVER: service-registry
-      EUREKA_PORT: 8761
-    ports:
-      - 9004:9004
-    expose:
-      - 9004
-    networks:
-      - csl-ims
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+    depends_on:
+      - ims-service-registry
 
-networks:
-  csl-ims:
-    driver: bridge
+  ## Product-Service Docker Compose Config
+  ims-customer-service:
+    container_name: customer-service
+    image: 611622/ims-customer-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - ims-mysql
+      - ims-service-registry
+      - ims-gateway
+
+  ## Order-Service Docker Compose Config
+  order-service:
+    container_name: order-service
+    image: microservices-tutorial/order-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-order:5431/order-service
+    depends_on:
+      - postgres-order
+      - broker
+      - zipkin
+      - discovery-server
+      - api-gateway
+
+  ## Inventory-Service Docker Compose Config
+  inventory-service:
+    container_name: inventory-service
+    image: microservices-tutorial/inventory-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-inventory:5432/inventory-service
+    depends_on:
+      - postgres-inventory
+      - discovery-server
+      - api-gateway

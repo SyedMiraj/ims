@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://ims-service-registry:8761/eureka
+  instance:
+    hostname: ims-service-registry
