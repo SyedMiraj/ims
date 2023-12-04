@@ -16,6 +16,14 @@ services:
     command: -p 3306
     restart: always
 
+  ims-cloud-config:
+    container_name: cloud-config
+    image: 611622/ims-cloud-config
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://ims-mysql:3306/ims
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_DATABASE}
+
+
   ## Eureka Server
   ims-service-registry:
     image: 611622/ims-service-registry:latest
@@ -36,7 +44,7 @@ services:
     depends_on:
       - ims-service-registry
 
-  ## Product-Service Docker Compose Config
+  ## Customer-Service Docker Compose Config
   ims-customer-service:
     container_name: customer-service
     image: 611622/ims-customer-service:latest
@@ -47,28 +55,37 @@ services:
       - ims-service-registry
       - ims-gateway
 
-  ## Order-Service Docker Compose Config
-  order-service:
-    container_name: order-service
-    image: microservices-tutorial/order-service:latest
+  ## Product-Service Docker Compose Config
+  ims-product-service:
+    container_name: product-service
+    image: 611622/ims-product-service:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-order:5431/order-service
     depends_on:
-      - postgres-order
-      - broker
-      - zipkin
-      - discovery-server
-      - api-gateway
+      - ims-mysql
+      - ims-service-registry
+      - ims-gateway
 
-  ## Inventory-Service Docker Compose Config
-  inventory-service:
-    container_name: inventory-service
-    image: microservices-tutorial/inventory-service:latest
+    ## Product-Service Docker Compose Config
+  ims-supplier-service:
+    container_name: supplier-service
+    image: 611622/ims-supplier-service:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-inventory:5432/inventory-service
+      - SPRING_DATASOURCE_URL=jdbc:mysql://ims-mysql:3306/ims
     depends_on:
-      - postgres-inventory
-      - discovery-server
-      - api-gateway
+      - ims-mysql
+      - ims-service-registry
+      - ims-gateway
+
+      ## Product-Service Docker Compose Config
+  ims-user-service:
+    container_name: user-service
+    image: 611622/ims-user-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://ims-mysql:3306/ims
+    depends_on:
+      - ims-mysql
+      - ims-service-registry
+      - ims-gateway
