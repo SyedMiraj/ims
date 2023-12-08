@@ -1,0 +1,56 @@
+---
+version: '3.7'
+services:
+  ims-mysql:
+    container_name: ims-mysql
+    image: mysql
+    environment:
+      MYSQL_DATABASE: ims
+      MYSQL_ROOT_PASSWORD: csl$b4@2023
+    volumes:
+      - ./ims-mysql:/var/lib/mysql
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    command: -p 3306
+    restart: always
+
+  ims-cloud-config:
+    container_name: cloud-config
+    image: 611622/ims-cloud-config
+    expose:
+      - "9296"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://ims-mysql:3306/ims
+
+  ## Eureka Server
+  ims-service-registry:
+    image: 611622/ims-service-registry:latest
+    container_name: service-registry
+    ports:
+      - "8761:8761"
+
+  ims-gateway:
+    image: 611622/ims-gateway:latest
+    container_name: gateway
+    ports:
+      - "8181:8080"
+    expose:
+      - "8181"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+    depends_on:
+      - ims-service-registry
+
+  ## Customer-Service Docker Compose Config
+  ims-customer-service:
+    container_name: customer-service
+    image: 611622/ims-customer-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - ims-mysql
+      - ims-service-registry
+      - ims-gateway
