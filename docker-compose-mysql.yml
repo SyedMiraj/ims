@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  ims-mysql:
+    container_name: ims-mysql
+    image: mysql
+    environment:
+      MYSQL_DATABASE: ims
+      MYSQL_ROOT_PASSWORD: csl$b4@2023
+    volumes:
+      - ./ims-mysql:/var/lib/mysql
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    command: -p 3306
+    restart: always
