@@ -1,28 +1,6 @@
 ---
 version: '3.7'
 services:
-  ims-mysql:
-    container_name: ims-mysql
-    image: mysql:5.7
-    environment:
-      MYSQL_DATABASE: ims
-      MYSQL_ROOT_PASSWORD: Times@12345
-    volumes:
-      - ./ims-mysql:/var/lib/mysql
-    expose:
-      - "3306"
-    ports:
-      - "3306:3306"
-    restart: always
-
-  ims-cloud-config:
-    container_name: cloud-config
-    image: 611622/ims-cloud-config
-    expose:
-      - "9296"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://ims-mysql:3306/ims
-
   ## Eureka Server
   ims-service-registry:
     image: 611622/ims-service-registry:latest
@@ -53,3 +31,8 @@ services:
       - ims-mysql
       - ims-service-registry
       - ims-gateway
+
+networks:
+  ims-network:
+    name: ims-network
+    external: true
